@@ -1,11 +1,13 @@
 package Pixels;
 
+import Colors.TestColorPallete;
 import processing.core.PApplet;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Random;
 
 public class PixelMapTest extends PApplet{
 
@@ -17,6 +19,12 @@ public class PixelMapTest extends PApplet{
   private int color;
   private int colorValue;
   private String url;
+  private TestColorPallete testColorPallete;
+  private Random random;
+
+  public PixelMapFiller pixelMapFiller = (col, row) -> {
+    return testColorPallete.getRandomColor();
+  };
 
   public void settings(){
     height = 1600;
@@ -25,6 +33,9 @@ public class PixelMapTest extends PApplet{
     colorMode = HSB;
     colorValue = getValue();
     size(width, height);
+    pixelMap = new PixelMap(this, height, width, pixelSize);
+    testColorPallete = new TestColorPallete();
+    random = new Random();
   }
 
   public int getValue() {
@@ -35,7 +46,8 @@ public class PixelMapTest extends PApplet{
     //colorMode(RGB, 400);
     colorMode(HSB, 400);
     noStroke();   // Don't draw a stroke around shapes
-    fillMap();
+    //fillMap();
+    pixelMap.fillMap(pixelMapFiller);
   }
 
   public void fillMap() {
