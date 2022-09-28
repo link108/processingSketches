@@ -1,5 +1,6 @@
 package Tiles;
 
+import Colors.ColorPallete;
 import Colors.TestColorPallete;
 import processing.core.PApplet;
 import processing.core.PFont;
@@ -15,7 +16,7 @@ public class TilesSketch extends PApplet{
 
   private boolean initialDraw = true;
   private List<List<Tile>> tiles;
-  private TestColorPallete testColorPallete;
+  private ColorPallete colorPallete;
 
   public void setupTiles() {
     tiles = new ArrayList<>();
@@ -24,10 +25,11 @@ public class TilesSketch extends PApplet{
       rowTiles = new ArrayList<>();
       tiles.add(rowTiles);
       for (int col = 0; col < numberOfTiles; col++) {
-        rowTiles.add(new Tile(this, row, col, Tile.side));
+        rowTiles.add(new Tile(this, row, col, Tile.side, colorPallete));
       }
     }
   }
+
   public void setup() {
     f = createFont("Arial",12,true);
     textFont(f);
@@ -35,9 +37,9 @@ public class TilesSketch extends PApplet{
 
   public void settings(){
     int side = numberOfTiles * Tile.side;
-    testColorPallete = new TestColorPallete();
+    colorPallete = new TestColorPallete();
     size(side, side);
-    setupTiles();
+    //setupTiles();
   }
 
   public void draw(){
@@ -51,6 +53,7 @@ public class TilesSketch extends PApplet{
   }
 
   public void render() {
+    setupTiles();
     background(255);
     System.out.println("generating tiles");
     Tile tile;

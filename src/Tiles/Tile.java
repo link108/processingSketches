@@ -1,13 +1,12 @@
 package Tiles;
 
+import Colors.Color;
+import Colors.ColorPallete;
 import processing.core.PApplet;
-import processing.core.PFont;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
-import static processing.app.Language.text;
 
 public class Tile {
 
@@ -27,10 +26,13 @@ public class Tile {
   private List<List<TilesPixel>> tilePixels;
   private int minPixelBounndary = tileBuffer;
   private int maxPixelBounndary = pixelsPerSide - tileBuffer;
+  private ColorPallete colorPallete;
+  private int backgroundColor;
+  private int fillColor;
 
   public boolean initialRender = true;
 
-  public Tile(PApplet sketch, int i, int j, int side){
+  public Tile(PApplet sketch, int i, int j, int side, ColorPallete colorPallete){
     this.sketch = sketch;
     this.i = i;
     this.j = j;
@@ -38,7 +40,10 @@ public class Tile {
     this.x = i * side;
     this.y = j * side;
     this.pixelSize = side / pixelsPerSide;
-
+    this.colorPallete = colorPallete;
+    List<Color> colors = colorPallete.getMultipleRandomColors(2);
+    this.backgroundColor = colors.get(0).toColor();
+    this.fillColor = colors.get(1).toColor();
     tilePixels = new ArrayList<>();
     List rowTilePixels;
     float yPos;
@@ -50,14 +55,14 @@ public class Tile {
       for(int col=0; col < pixelsPerSide; col++) {
         xPos = x + col * pixelsPerSide;
         yPos = y + row * pixelsPerSide;
-        rowTilePixels.add(new TilesPixel(this.sketch, row, col, xPos,  yPos, pixelSize));
+        rowTilePixels.add(new TilesPixel(this.sketch, this, row, col, xPos,  yPos, pixelSize, fillColor));
       }
 
     }
   }
 
-  public TilesPixel getPixel(int x, int y) {
-    return tilePixels.get(x).get(y);
+  public TilesPixel getPixel(int row, int col) {
+    return tilePixels.get(row).get(col);
   }
 
   public TilesPixel getRandomPixelInBoundary(){
@@ -82,7 +87,9 @@ public class Tile {
 
   public void render(){
     clear();
-    sketch.fill(255);
+    //sketch.fill(255);
+    sketch.stroke(0);
+    sketch.fill(backgroundColor);
     sketch.rect(x, y, side, side);
 
     int stepsPerRender = rand.nextInt(maxPixelsPerRender - minPixelsPerRender) + minPixelsPerRender;
@@ -100,7 +107,7 @@ public class Tile {
   }
 
   public void debugPrint() {
-    printPosition();
+    //printPosition();
     System.out.println("DEBUG PRINT");
     System.out.println("Tile(i: " + i + ", j: " + j + ")");
     System.out.println("#################");
