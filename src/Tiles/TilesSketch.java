@@ -20,11 +20,11 @@ public class TilesSketch extends PApplet{
   public void setupTiles() {
     tiles = new ArrayList<>();
     ArrayList<Tile> rowTiles;
-    for (int i = 0; i < numberOfTiles; i++) {
+    for (int row = 0; row < numberOfTiles; row++) {
       rowTiles = new ArrayList<>();
       tiles.add(rowTiles);
-      for (int j = 0; j < numberOfTiles; j++) {
-        rowTiles.add(new Tile(this, i, j, Tile.side));
+      for (int col = 0; col < numberOfTiles; col++) {
+        rowTiles.add(new Tile(this, row, col, Tile.side));
       }
     }
   }

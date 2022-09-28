@@ -10,6 +10,7 @@ public class TilesPixel {
   private float x;
   private float y;
   private float pixelSize;
+  public boolean filled;
 
   public TilesPixel(PApplet sketch, int i, int j, float x, float y, float pixelSize){
     this.sketch = sketch;
@@ -18,14 +19,22 @@ public class TilesPixel {
     this.x = x;
     this.y = y;
     this.pixelSize = pixelSize;
+    this.filled = false;
+  }
+
+  public void clear() {
+    filled = false;
+  }
+
+  public void setFilled() {
+    filled = true;
   }
 
   public void render(){
-    sketch.fill(0);
-    //float pixelX = x + startX * pixelSize;
-    //float pixelY = y + startY * pixelSize;
-    sketch.rect(x, y, pixelSize, pixelSize);
+    if(filled) {
+      sketch.fill(0);
+      sketch.rect(x, y, pixelSize, pixelSize);
+    }
   }
-
 
 }
