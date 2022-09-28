@@ -13,6 +13,9 @@ public class Tile {
   private PApplet sketch;
   public static int side = 64;
 
+  private int maxPixelsPerRender = 20;
+  private int minPixelsPerRender = 10;
+
   private int i;
   private int j;
   private float x;
@@ -21,8 +24,6 @@ public class Tile {
   private int pixelsPerSide = 8;
   public static Random rand = new Random();
   public static int tileBuffer = 1;
-  private int maxPixelsPerRender = 16;
-  private int minPixelsPerRender = 8;
   private List<List<TilesPixel>> tilePixels;
   private int minPixelBounndary = tileBuffer;
   private int maxPixelBounndary = pixelsPerSide - tileBuffer;

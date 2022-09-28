@@ -11,16 +11,15 @@ public class TestColorPallete extends PApplet implements ColorPallete {
   public final Color GREEN = new Color(0, 255, 0);
   public final Color BLUE = new  Color(0, 0, 255);
   public final Color YELLOW = new Color(255, 255, 0);
+  public final Color PURPLE = new Color(255, 0, 255);
+  public final Color CYAN = new Color(0, 255, 255);
+
 
   private final List<Color> colorPallete;
   private Random randomGenerator = new Random();
 
   public TestColorPallete() {
-    colorPallete = new ArrayList<>();
-    colorPallete.add(RED);
-    colorPallete.add(GREEN);
-    colorPallete.add(BLUE);
-    colorPallete.add(YELLOW);
+    colorPallete = Arrays.asList(RED, GREEN, BLUE, YELLOW, PURPLE, CYAN);
   }
 
   @Override
