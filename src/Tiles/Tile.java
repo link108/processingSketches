@@ -3,6 +3,8 @@ package Tiles;
 import processing.core.PApplet;
 import processing.core.PFont;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Tile {
@@ -18,6 +20,11 @@ public class Tile {
   private int pixelsPerSide = 8;
   public static Random rand = new Random();
   public static int tileBuffer = 1;
+  private int maxPixelsPerRender = 16;
+  private int minPixelsPerRender = 8;
+  private List<List<TilesPixel>> tilePixels;
+  private int minPixelBounndary = tileBuffer;
+  private int maxPixelBounndary = pixelsPerSide - tileBuffer;
 
   public boolean initialRender = true;
 
@@ -28,45 +35,37 @@ public class Tile {
     this.x = i * side;
     this.y = j * side;
     this.pixelSize = side / pixelsPerSide;
-  }
 
-  private void fillPixel(int startX, int startY) {
-    sketch.fill(0);
-    float pixelX = x + startX * pixelSize;
-    float pixelY = y + startY * pixelSize;
-    sketch.rect(pixelX, pixelY, pixelSize, pixelSize);
+    tilePixels = new ArrayList<>();
+    List rowTilePixels;
+    float yPos;
+    float xPos;
+
+    for(int row=0; row < pixelsPerSide; row++) {
+      rowTilePixels = new ArrayList<>();
+      tilePixels.add(rowTilePixels);
+      for(int col=0; col < pixelsPerSide; col++) {
+        xPos = x + row * pixelsPerSide;
+        yPos = y + col * pixelsPerSide;
+        rowTilePixels.add(new TilesPixel(this.sketch, row, col, xPos,  yPos, pixelSize));
+      }
+
+    }
   }
 
   public void step(){
-    int max = pixelsPerSide - tileBuffer;
-    int min = tileBuffer;
-    int startX = rand.nextInt(max - min) + min;
-    int startY = rand.nextInt(max - min) + min;
-    System.out.println("StartX: " + startX + ", startY: " + startY);
-    fillPixel(startX, startY);
-
-    //x += xSpeed;
-    //if(x < 0 || x > sketch.width){
-    //  xSpeed *= -1;
-    //}
-    //
-    //y += ySpeed;
-    //if(y < 0 || y > sketch.height){
-    //  ySpeed *= -1;
-    //}
+    int startX = rand.nextInt(maxPixelBounndary - minPixelBounndary) + minPixelBounndary;
+    int startY = rand.nextInt(maxPixelBounndary - minPixelBounndary) + minPixelBounndary;
+    tilePixels.get(startX).get(startY).render();
   }
 
   public void render(){
-    if(initialRender == true)  {
-      sketch.fill(255);
-      sketch.rect(x, y, side, side);
-      initialRender = false;
+    sketch.fill(255);
+    sketch.rect(x, y, side, side);
+    int stepsPerRender = rand.nextInt(maxPixelsPerRender - minPixelsPerRender) + minPixelsPerRender;
+    System.out.println("Steps per render: " + stepsPerRender);
+    for(int i=0; i < stepsPerRender; i++) {
+      step();
     }
-
-    step();
-
-    //sketch.fill(0);
-    //sketch.text("i: " + i + ", j: " + j, x + 2, y + side / 4);
-    //sketch.text("position: " + (TilesSketch.numberOfTiles * j + i + 1), x + 2, y + side / 2);
   }
 }
