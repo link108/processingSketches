@@ -13,27 +13,28 @@ public class Tile {
   private PApplet sketch;
   public static int side = 64;
 
-  private int maxPixelsPerRender = 20;
-  private int minPixelsPerRender = 10;
+  public int maxPixelsPerRender = 20;
+  public int minPixelsPerRender = 10;
 
-  private int i;
-  private int j;
-  private float x;
-  private float y;
-  private float pixelSize;
-  private int pixelsPerSide = 8;
+  public int i;
+  public int j;
+  public float x;
+  public float y;
+  public float pixelSize;
+  public int pixelsPerSide = 8;
   public static Random rand = new Random();
   public static int tileBuffer = 1;
   private List<List<TilesPixel>> tilePixels;
-  private int minPixelBounndary = tileBuffer;
-  private int maxPixelBounndary = pixelsPerSide - tileBuffer;
+  public int minPixelBounndary = tileBuffer;
+  public int maxPixelBounndary = pixelsPerSide - tileBuffer;
   private ColorPallete colorPallete;
-  private int backgroundColor;
-  private int fillColor;
+  public int backgroundColor;
+  public int fillColor;
+  private TileFiller tileFiller;
 
   public boolean initialRender = true;
 
-  public Tile(PApplet sketch, int i, int j, int side, ColorPallete colorPallete){
+  public Tile(PApplet sketch, int i, int j, int side, ColorPallete colorPallete, TileFiller tileFiller){
     this.sketch = sketch;
     this.i = i;
     this.j = j;
@@ -45,11 +46,15 @@ public class Tile {
     List<Color> colors = colorPallete.getMultipleRandomColors(2);
     this.backgroundColor = colors.get(0).toColor();
     this.fillColor = colors.get(1).toColor();
+    this.tileFiller = tileFiller;
+    setupPixels();
+  }
+
+  public void setupPixels() {
     tilePixels = new ArrayList<>();
     List rowTilePixels;
     float yPos;
     float xPos;
-
     for(int row=0; row < pixelsPerSide; row++) {
       rowTilePixels = new ArrayList<>();
       tilePixels.add(rowTilePixels);
@@ -58,7 +63,6 @@ public class Tile {
         yPos = y + row * pixelsPerSide;
         rowTilePixels.add(new TilesPixel(this.sketch, this, row, col, xPos,  yPos, pixelSize, fillColor));
       }
-
     }
   }
 
@@ -84,26 +88,9 @@ public class Tile {
     sketch.text("i: " + i + ", j: " + j, x + 2, y + this.side - 2);
   }
 
-
-
   public void render(){
-    clear();
-    //sketch.fill(255);
-    sketch.stroke(0);
-    sketch.fill(backgroundColor);
-    sketch.rect(x, y, side, side);
-
-    int stepsPerRender = rand.nextInt(maxPixelsPerRender - minPixelsPerRender) + minPixelsPerRender;
-    for(int i=0; i < stepsPerRender; i++) {
-      TilesPixel tilePixel = getRandomPixelInBoundary();
-      tilePixel.setFilled();
-    }
-
-    for(int i=0; i< pixelsPerSide; i++) {
-      for(int j=0; j < pixelsPerSide; j++) {
-        getPixel(i, j).render();
-      }
-    }
+    tileFiller.setupTile(this);
+    tileFiller.render(this);
     debugPrint();
   }
 

@@ -4,7 +4,6 @@ import Colors.ColorPallete;
 import Colors.TestColorPallete;
 import processing.core.PApplet;
 import processing.core.PFont;
-import processing.event.MouseEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,15 +16,17 @@ public class TilesSketch extends PApplet{
   private boolean initialDraw = true;
   private List<List<Tile>> tiles;
   private ColorPallete colorPallete;
+  private TileFiller tileFiller;
 
   public void setupTiles() {
+    tileFiller = new RandomTileFiller(this);
     tiles = new ArrayList<>();
     ArrayList<Tile> rowTiles;
     for (int row = 0; row < numberOfTiles; row++) {
       rowTiles = new ArrayList<>();
       tiles.add(rowTiles);
       for (int col = 0; col < numberOfTiles; col++) {
-        rowTiles.add(new Tile(this, row, col, Tile.side, colorPallete));
+        rowTiles.add(new Tile(this, row, col, Tile.side, colorPallete, tileFiller));
       }
     }
   }
@@ -39,7 +40,6 @@ public class TilesSketch extends PApplet{
     int side = numberOfTiles * Tile.side;
     colorPallete = new TestColorPallete();
     size(side, side);
-    //setupTiles();
   }
 
   public void draw(){
@@ -63,7 +63,6 @@ public class TilesSketch extends PApplet{
         tile.render();
       }
     }
-
   }
 
   public static void main(String[] args){

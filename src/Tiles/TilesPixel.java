@@ -1,6 +1,5 @@
 package Tiles;
 
-import Colors.Color;
 import processing.core.PApplet;
 
 public class TilesPixel {
