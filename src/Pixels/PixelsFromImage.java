@@ -2,6 +2,9 @@ package Pixels;
 
 import processing.core.PApplet;
 import processing.core.PImage;
+
+import java.util.ArrayList;
+import java.util.List;
 //import processing.core.PGraphics;
 
 //import java.nio.file.Path;
@@ -20,6 +23,7 @@ public class PixelsFromImage extends PApplet {
   private PImage flower;
   private PImage skull;
   private PImage destination;
+  private boolean initialDraw;
 
   public void settings() {
     height = 400;
@@ -36,13 +40,14 @@ public class PixelsFromImage extends PApplet {
   }
 
   public void setup() {
-    flower = loadImage("/Users/cmotevasselani/git_repos/link108/processing-sketches/flower-image.jpg");
+    initialDraw = true;
+    flower = loadImage("/Users/cmotevasselani/git-repos/link108/processingSketches/flower-image.jpg");
     //url = "https://ih1.redbubble.net/image.1502927078.3998/fposter,small,wall_texture,product,750x1000.jpg";
     //imageDownloader = new ImageDownloader(url);
     //Path localImage = imageDownloader.downloadImage();
     noStroke();   // Don't draw a stroke around shapes
     //flower = loadImage("flower-image.jpg");
-    skull = loadImage("skull.jpeg");
+//    skull = loadImage("skull.jpeg");
     //surface.setSize(flower.width, flower.height);
     surface.setSize(flower.width, flower.height);
 
@@ -63,17 +68,75 @@ public class PixelsFromImage extends PApplet {
     //tint(0, 255, 117);
     //loopThroughAllPixels();
     //loopThroughPixelsByColumn();
-    //fillMapWithRects();
-    //tintImage();
-    //pixelateImage();
-    //pixelBrightnessThreshold();
-    //simpleBrightnessThreshold();
-    //pixelLeftNeighborDiff();
-    //sharpenWithConvolution();
-    //pointilizeImage();
-    convert2Dto3D();
+//    fillMapWithRects();
+//    tintImage();
+//    change_brightness_by_mouse_location();
+//    pixelBrightnessThreshold();
+//    simpleBrightnessThreshold();
+//    pixelLeftNeighborDiff();
+//    sharpenWithConvolution();
+//    pointilizeImage();
+//    convert2Dto3D();
+    if (initialDraw == true)  {
+      pixelizeImage();
+      initialDraw = false;
+    }
   }
 
+
+  public int getAverageColor(int x, int y, int radius){
+    int starting_i = Math.max(x - radius, 0);
+    int starting_j = Math.max(y - radius, 0);
+    int ending_i = Math.min(x + radius, flower.width);
+    int ending_j = Math.min(y + radius, flower.height);
+
+    int loc;
+    int pixel;
+    List<Float> reds = new ArrayList<>();
+    List<Float> greens = new ArrayList<>();
+    List<Float> blues = new ArrayList<>();
+
+    for (int i = starting_i; i < ending_i; i++) {
+      for (int j = starting_j; j < ending_j; j++) {
+        loc = i + flower.width * j;
+        pixel = flower.pixels[loc];
+        reds.add(red(pixel));
+        greens.add(green(pixel));
+        blues.add(blue(pixel));
+      }
+    }
+    float red = calculateAverage(reds);
+    float green = calculateAverage(greens);
+    float blue = calculateAverage(blues);
+
+
+    return color(red, green, blue);
+
+  }
+
+  public static float calculateAverage(List<Float> list) {
+//    list.removeIf(e -> e >= 220);
+    float sum = 0;
+    for (Float value : list) {
+      sum += value;
+    }
+    return sum / list.size();
+  }
+
+  public void pixelizeImage() {
+    int pixelSize = 5;
+    noStroke();
+    for (int x = 0; x < flower.width; x += pixelSize) {
+      for (int y = 0; y < flower.height; y += pixelSize) {
+        int loc = x + flower.width * y;
+        int pixelColor = getAverageColor(x, y, pixelSize);
+//        int pixelColor = flower.pixels[loc];
+        fill(pixelColor);
+        rect(x, y, pixelSize, pixelSize);
+
+      }
+    }
+  }
 
   public int cellsize = 2;
 
@@ -241,7 +304,7 @@ public class PixelsFromImage extends PApplet {
     image(destination, 0,0);
   }
 
-  public void pixelateImage() {
+  public void change_brightness_by_mouse_location() {
     loadPixels();
     surface.setSize(flower.width, flower.height);
     flower.loadPixels();
