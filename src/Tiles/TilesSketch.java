@@ -14,19 +14,16 @@ public class TilesSketch extends PApplet{
   public PFont f;
 
   private boolean initialDraw = true;
-  private List<List<Tile>> tiles;
+  private List<Tile> tiles;
   private ColorPallete colorPallete;
   private TileFiller tileFiller;
 
   public void setupTiles() {
     tileFiller = new RandomTileFiller(this);
     tiles = new ArrayList<>();
-    ArrayList<Tile> rowTiles;
     for (int row = 0; row < numberOfTiles; row++) {
-      rowTiles = new ArrayList<>();
-      tiles.add(rowTiles);
       for (int col = 0; col < numberOfTiles; col++) {
-        rowTiles.add(new Tile(this, row, col, Tile.side, colorPallete, tileFiller));
+        tiles.add(new Tile(this, row, col, Tile.side, colorPallete, tileFiller));
       }
     }
   }
@@ -56,12 +53,8 @@ public class TilesSketch extends PApplet{
     setupTiles();
     background(255);
     System.out.println("generating tiles");
-    Tile tile;
-    for (int i = 0; i < numberOfTiles; i++) {
-      for (int j = 0; j < numberOfTiles; j++) {
-        tile = tiles.get(i).get(j);
-        tile.render();
-      }
+    for (Tile tile : tiles) {
+      tile.render();
     }
   }
 
