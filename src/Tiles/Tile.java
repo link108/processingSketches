@@ -10,14 +10,16 @@ import java.util.Random;
 
 public class Tile {
 
-  private PApplet sketch;
+  public PApplet sketch;
   public static int side = 64;
 
   public int maxPixelsPerRender = 20;
   public int minPixelsPerRender = 10;
 
-  public int i;
-  public int j;
+  // row and col are the tile's location
+  public int row;
+  public int col;
+  // x and y are the tile's 0 positions in the overall window
   public float x;
   public float y;
   public float pixelSize;
@@ -36,8 +38,8 @@ public class Tile {
 
   public Tile(PApplet sketch, int i, int j, int side, ColorPallete colorPallete, TileFiller tileFiller){
     this.sketch = sketch;
-    this.i = i;
-    this.j = j;
+    this.row = i;
+    this.col = j;
     this.side = side;
     this.x = i * side;
     this.y = j * side;
@@ -70,9 +72,20 @@ public class Tile {
     return tilePixels.get(row).get(col);
   }
 
+  public boolean isInBounds(int check) {
+    System.out.println("min pixel boundary: " + minPixelBounndary);
+    System.out.println("max pixel boundary: " + maxPixelBounndary);
+    if (check < minPixelBounndary || check >= maxPixelBounndary) {
+      return false;
+    }
+    return true;
+
+  }
+
   public TilesPixel getRandomPixelInBoundary(){
     int x = rand.nextInt(maxPixelBounndary - minPixelBounndary) + minPixelBounndary;
     int y = rand.nextInt(maxPixelBounndary - minPixelBounndary) + minPixelBounndary;
+    System.out.println("getRandomPixelInBoundary, x: " + x + ", y: " + y);
     return getPixel(x, y);
   }
 
@@ -85,7 +98,10 @@ public class Tile {
   }
 
   public void printPosition() {
-    sketch.text("i: " + i + ", j: " + j, x + 2, y + this.side - 2);
+    sketch.text("i: " + row + ", j: " + col, x + 2, y + this.side - 2);
+  }
+
+  public void initialDraw() {
   }
 
   public void render(){
@@ -97,7 +113,7 @@ public class Tile {
   public void debugPrint() {
     //printPosition();
     System.out.println("DEBUG PRINT");
-    System.out.println("Tile(i: " + i + ", j: " + j + ")");
+    System.out.println("Tile(i: " + row + ", j: " + col + ")");
     System.out.println("#################");
     String row;
     TilesPixel tilesPixel;

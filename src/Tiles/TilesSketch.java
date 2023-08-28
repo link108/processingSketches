@@ -19,6 +19,7 @@ public class TilesSketch extends PApplet{
   private TileFiller tileFiller;
 
   public void setupTiles() {
+    background(255);
     tileFiller = new RandomTileFiller(this);
     tiles = new ArrayList<>();
     for (int row = 0; row < numberOfTiles; row++) {
@@ -33,6 +34,7 @@ public class TilesSketch extends PApplet{
     textFont(f);
   }
 
+  // needed to define size and smooth values for sketches
   public void settings(){
     int side = numberOfTiles * Tile.side;
     colorPallete = new TestColorPallete();
@@ -51,7 +53,6 @@ public class TilesSketch extends PApplet{
 
   public void render() {
     setupTiles();
-    background(255);
     System.out.println("generating tiles");
     for (Tile tile : tiles) {
       tile.render();

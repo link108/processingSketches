@@ -5,10 +5,10 @@ import processing.core.PApplet;
 public class TilesPixel {
 
   private PApplet sketch;
-  private int i;
-  private int j;
-  private float x;
-  private float y;
+  public int i;
+  public int j;
+  public float x;
+  public float y;
   private float pixelSize;
   public boolean filled;
   public int color;
