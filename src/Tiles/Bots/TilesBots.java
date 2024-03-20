@@ -31,8 +31,10 @@ public class TilesBots extends PApplet{
       }
     }
     for (Tile tile : tiles) {
+      System.out.print("tile");
       tile.initialDraw();
     }
+    System.out.println("hi");
   }
 
   public void setup() {
@@ -50,8 +52,10 @@ public class TilesBots extends PApplet{
     if(initialDraw == true){
       setupTiles();
 //      render();
+      System.out.print("hi");
       initialDraw = false;
     }
+    System.out.print("hi");
     if(mousePressed) {
       render();
     }

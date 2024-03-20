@@ -4,7 +4,7 @@ import processing.core.PApplet;
 
 import java.util.Random;
 
-public class RandomTileFiller implements TileFiller {
+public class  RandomTileFiller implements TileFiller {
 
   private PApplet sketch;
   public static Random rand = new Random();
@@ -33,6 +33,5 @@ public class RandomTileFiller implements TileFiller {
           tile.getPixel(i, j).render();
         }
       }
-      tile.debugPrint();
   }
 }

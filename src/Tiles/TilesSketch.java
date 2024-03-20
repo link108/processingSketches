@@ -10,7 +10,7 @@ import java.util.List;
 
 public class TilesSketch extends PApplet{
 
-  public static int numberOfTiles = 10;
+  public static int numberOfTiles = 1;
   public PFont f;
 
   private boolean initialDraw = true;
@@ -42,7 +42,7 @@ public class TilesSketch extends PApplet{
   }
 
   public void draw(){
-    if(initialDraw == true){
+    if(initialDraw){
       render();
       initialDraw = false;
     }
@@ -53,9 +53,20 @@ public class TilesSketch extends PApplet{
 
   public void render() {
     setupTiles();
-    System.out.println("generating tiles");
+    System.out.printf("generating %d tiles\n", tiles.size());
+    int index = 0;
     for (Tile tile : tiles) {
+      if(index == 10) {
+        System.out.println("Here");
+      }
       tile.render();
+      System.out.println("Finished calling render on tile: " + index);
+      index += 1;
+    }
+    try {
+      Thread.sleep(1000);
+    } catch (InterruptedException e) {
+      throw new RuntimeException(e);
     }
   }
 

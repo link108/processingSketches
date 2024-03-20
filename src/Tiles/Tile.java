@@ -85,7 +85,7 @@ public class Tile {
   public TilesPixel getRandomPixelInBoundary(){
     int x = rand.nextInt(maxPixelBounndary - minPixelBounndary) + minPixelBounndary;
     int y = rand.nextInt(maxPixelBounndary - minPixelBounndary) + minPixelBounndary;
-    System.out.println("getRandomPixelInBoundary, x: " + x + ", y: " + y);
+//    System.out.println("getRandomPixelInBoundary, x: " + x + ", y: " + y);
     return getPixel(x, y);
   }
 
@@ -107,7 +107,7 @@ public class Tile {
   public void render(){
     tileFiller.setupTile(this);
     tileFiller.render(this);
-    debugPrint();
+//    debugPrint();
   }
 
   public void debugPrint() {
