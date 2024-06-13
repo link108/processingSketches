@@ -26,6 +26,10 @@ public class TilesPixel {
     this.color = color;
   }
 
+  public void setColor(int color) {
+    this.color = color;
+  }
+
   public void clear() {
     filled = false;
   }

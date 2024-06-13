@@ -15,16 +15,15 @@ public class TilesSketch extends PApplet{
 
   private boolean initialDraw = true;
   private List<Tile> tiles;
-  private ColorPallete colorPallete;
-  private TileFiller tileFiller;
 
   public void setupTiles() {
     background(255);
-    tileFiller = new RandomTileFiller(this);
     tiles = new ArrayList<>();
     for (int row = 0; row < numberOfTiles; row++) {
       for (int col = 0; col < numberOfTiles; col++) {
-        tiles.add(new Tile(this, row, col, Tile.side, colorPallete, tileFiller));
+        ColorPallete colorPallete = new TestColorPallete();
+        TileFiller tileFiller = new RandomTileFiller(this, colorPallete);
+        tiles.add(new Tile(this, row, col, Tile.side, tileFiller));
       }
     }
   }
@@ -37,7 +36,6 @@ public class TilesSketch extends PApplet{
   // needed to define size and smooth values for sketches
   public void settings(){
     int side = numberOfTiles * Tile.side;
-    colorPallete = new TestColorPallete();
     size(side, side);
   }
 

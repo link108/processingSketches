@@ -27,7 +27,7 @@ public class TilesBots extends PApplet{
     tiles = new ArrayList<>();
     for (int row = 0; row < numberOfTiles; row++) {
       for (int col = 0; col < numberOfTiles; col++) {
-        tiles.add(new TileBot(this, row, col, Tile.side, colorPallete, tileFiller));
+        tiles.add(new TileBot(this, row, col, Tile.side, tileFiller));
       }
     }
     for (Tile tile : tiles) {

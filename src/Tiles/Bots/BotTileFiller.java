@@ -25,4 +25,8 @@ public class BotTileFiller implements TileFiller {
   public void render(Tile tile) {
 //    tile.render();
   }
+
+  public int getFillColor() {
+    return 0;
+  }
 }

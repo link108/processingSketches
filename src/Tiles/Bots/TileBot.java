@@ -10,8 +10,8 @@ public class TileBot extends Tile {
 
     private Bot bot;
 
-    public TileBot(PApplet sketch, int i, int j, int side, ColorPallete colorPallete, TileFiller tileFiller) {
-        super(sketch, i, j, side, colorPallete, tileFiller);
+    public TileBot(PApplet sketch, int i, int j, int side, TileFiller tileFiller) {
+        super(sketch, i, j, side, tileFiller);
 
         TilesPixel tilesPixel = getRandomPixelInBoundary();
         this.bot = new Bot(this, tilesPixel.i, tilesPixel.j);
@@ -20,7 +20,7 @@ public class TileBot extends Tile {
 
     public void initialDraw() {
         sketch.stroke(0);
-        sketch.fill(backgroundColor);
+        sketch.fill(fillColor);
         sketch.rect(x, y, side, side);
     }
 
