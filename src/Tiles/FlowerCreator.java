@@ -16,15 +16,34 @@ public class FlowerCreator implements TileFiller {
     private Random random = new Random();
     private Boolean initialSetupComplete = false;
 
-    private Map<String, Color> charColorMapping = new HashMap() {{
-        put('0', new Color(0, 0, 0));
-
-    }};
+    private Map<String, Color> charColorMapping;
 
     public FlowerCreator(ColorPallete colorPallete) {
         this.flowerOutline = createFlowerOutline();
         this.outlineEdgeLength = this.flowerOutline.length;
         this.colorPallete = colorPallete;
+        this.charColorMapping = createColorMapping(colorPallete);
+    }
+
+    public Map<String, Color> createColorMapping(ColorPallete colorPallete) {
+        charColorMapping = new HashMap();
+        charColorMapping.put(String.valueOf('0'), new Color(0, 0, 0));
+        charColorMapping.put(String.valueOf('a'), colorPallete.getRandomColor());
+        charColorMapping.put(String.valueOf('b'), colorPallete.getRandomColor());
+        charColorMapping.put(String.valueOf('c'), colorPallete.getRandomColor());
+        charColorMapping.put(String.valueOf('d'), colorPallete.getRandomColor());
+        charColorMapping.put(String.valueOf('e'), colorPallete.getRandomColor());
+        charColorMapping.put(String.valueOf('f'), colorPallete.getRandomColor());
+        charColorMapping.put(String.valueOf('g'), colorPallete.getRandomColor());
+        charColorMapping.put(String.valueOf('h'), colorPallete.getRandomColor());
+        charColorMapping.put(String.valueOf('i'), colorPallete.getRandomColor());
+        charColorMapping.put(String.valueOf('j'), colorPallete.getRandomColor());
+        charColorMapping.put(String.valueOf('k'), colorPallete.getRandomColor());
+        charColorMapping.put(String.valueOf('l'), colorPallete.getRandomColor());
+        charColorMapping.put(String.valueOf('m'), colorPallete.getRandomColor());
+        charColorMapping.put(String.valueOf('n'), colorPallete.getPallete().get(3));
+        charColorMapping.put(String.valueOf('x'), colorPallete.getRandomColor());
+        return charColorMapping;
     }
 
     public int getFillColor() {
@@ -96,15 +115,20 @@ public class FlowerCreator implements TileFiller {
         int color;
         for (char cs[] : this.flowerOutline) {
             for (char c : cs){
+                String charAsString = String.valueOf(c);
+                if(charAsString.equals(String.valueOf('.'))) {
+                    x += 1;
+                    continue;
+                }
                 TilesPixel tilesPixel = tile.getPixel(y, x);
                 tilesPixel.setFilled();
-                if(charColorMapping.keySet().contains(c)) {
-                    color = charColorMapping.get(c).toColor();
+
+
+                if(charColorMapping.keySet().contains(charAsString)) {
+                    color = charColorMapping.get(charAsString).toColor();
                     System.out.println("Setting row: " + y + ", col: " + x + ", color (Black): " + color);
-                } else {
-                    color = colorPallete.getPallete().get(1).toColor();
+                    tilesPixel.setColor(color);
                 }
-                tilesPixel.setColor(color);
                 x += 1;
             }
             x = starting_x;

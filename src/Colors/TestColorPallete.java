@@ -28,8 +28,8 @@ public class TestColorPallete extends PApplet implements ColorPallete {
   }
 
   @Override
-  public int getRandomColor() {
-    return colorPallete.get(randomGenerator.nextInt(colorPallete.size())).toColor();
+  public Color getRandomColor() {
+    return colorPallete.get(randomGenerator.nextInt(colorPallete.size()));
   }
 
   public List<Color> getMultipleRandomColors(int numColors) {

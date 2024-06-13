@@ -16,7 +16,7 @@ public class FlowersSketch extends PApplet{
 
   public static int numberOfTiles = 1;
   public static int pixelSize = 10;
-  public static int pixelsPerSide = 30;
+  public static int pixelsPerSide = 100;
   public PFont f;
 
   private boolean initialDraw = true;

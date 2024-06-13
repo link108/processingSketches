@@ -23,7 +23,7 @@ public class PixelMapTest extends PApplet{
   private Random random;
 
   public PixelMapFiller pixelMapFiller = (col, row) -> {
-    return testColorPallete.getRandomColor();
+    return testColorPallete.getRandomColor().toColor();
   };
 
   public void settings(){
