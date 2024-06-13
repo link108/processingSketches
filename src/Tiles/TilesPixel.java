@@ -14,7 +14,8 @@ public class TilesPixel {
   public int color;
   private Tile tile;
 
-  public TilesPixel(PApplet sketch, Tile tile, int i, int j, float x, float y, float pixelSize, int color){
+//  public TilesPixel(PApplet sketch, Tile tile, int i, int j, float x, float y, float pixelSize, int color){
+  public TilesPixel(PApplet sketch, Tile tile, int i, int j, float x, float y, float pixelSize) {
     this.sketch = sketch;
     this.tile = tile;
     this.i = i;
@@ -23,7 +24,6 @@ public class TilesPixel {
     this.y = y;
     this.pixelSize = pixelSize;
     this.filled = false;
-    this.color = color;
   }
 
   public void setColor(int color) {

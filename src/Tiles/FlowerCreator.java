@@ -1,14 +1,13 @@
 package Tiles;
 
+import Colors.Color;
 import Colors.ColorPallete;
 import processing.core.PApplet;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class FlowerCreator implements TileFiller {
     private char[][] flowerOutline;
@@ -16,6 +15,11 @@ public class FlowerCreator implements TileFiller {
     private ColorPallete colorPallete;
     private Random random = new Random();
     private Boolean initialSetupComplete = false;
+
+    private Map<String, Color> charColorMapping = new HashMap() {{
+        put('0', new Color(0, 0, 0));
+
+    }};
 
     public FlowerCreator(ColorPallete colorPallete) {
         this.flowerOutline = createFlowerOutline();
@@ -55,6 +59,10 @@ public class FlowerCreator implements TileFiller {
     }
 
     public void setupTile(Tile tile) {
+        System.out.println("Colors in palletes:");
+        for(Color color : colorPallete.getPallete()) {
+            System.out.println(color.toColor());
+        }
 
         if(!initialSetupComplete) {
             tile.sketch.stroke(0);
@@ -74,6 +82,7 @@ public class FlowerCreator implements TileFiller {
     public void render(Tile tile) {
         for(int i=0; i< tile.pixelsPerSide; i++) {
             for(int j=0; j < tile.pixelsPerSide; j++) {
+                System.out.println("row: " + i + ", col: " + j + ", color: " + tile.getPixel(i, j).color);
                 tile.getPixel(i, j).render();
                 tile.getPixel(i, j).renderPixelBorder();
             }
@@ -81,17 +90,24 @@ public class FlowerCreator implements TileFiller {
     }
 
     public void renderFlower(Tile tile, int center_x, int center_y) {
-        int x = center_x - (outlineEdgeLength / 2);
+        int starting_x = center_x - (outlineEdgeLength / 2);
+        int x = starting_x;
         int y = center_y - (outlineEdgeLength / 2);
-        int color = colorPallete.getPallete().get(1).toColor();
+        int color;
         for (char cs[] : this.flowerOutline) {
             for (char c : cs){
                 TilesPixel tilesPixel = tile.getPixel(y, x);
                 tilesPixel.setFilled();
+                if(charColorMapping.keySet().contains(c)) {
+                    color = charColorMapping.get(c).toColor();
+                    System.out.println("Setting row: " + y + ", col: " + x + ", color (Black): " + color);
+                } else {
+                    color = colorPallete.getPallete().get(1).toColor();
+                }
                 tilesPixel.setColor(color);
                 x += 1;
             }
-            x = 0;
+            x = starting_x;
             y += 1;
         }
     }

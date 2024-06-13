@@ -45,6 +45,7 @@ public class RandomTileFiller implements TileFiller {
     for(int i=0; i < stepsPerRender; i++) {
       TilesPixel tilePixel = tile.getRandomPixelInBoundary();
       tilePixel.setFilled();
+      tilePixel.setColor(getFillColor());
     }
   }
 

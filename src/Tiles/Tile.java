@@ -52,7 +52,8 @@ public class Tile {
       for(int col=0; col < pixelsPerSide; col++) {
         float xPos = x + col * pixelSize;
         float yPos = y + row * pixelSize;
-        rowTilePixels.add(new TilesPixel(this.sketch, this, row, col, xPos,  yPos, pixelSize, tileFiller.getFillColor()));
+//        rowTilePixels.add(new TilesPixel(this.sketch, this, row, col, xPos,  yPos, pixelSize, tileFiller.getFillColor()));
+        rowTilePixels.add(new TilesPixel(this.sketch, this, row, col, xPos,  yPos, pixelSize));
       }
     }
   }
