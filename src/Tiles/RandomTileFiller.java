@@ -31,6 +31,10 @@ public class RandomTileFiller implements TileFiller {
     return fillColor;
   }
 
+  public int getBackgroundColor() {
+    return backgroundColor;
+  }
+
   public void setupTile(Tile tile) {
     tile.clear();
     sketch.stroke(0);

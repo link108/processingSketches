@@ -3,6 +3,7 @@ package Tiles.Bots;
 import Tiles.Tile;
 import Tiles.TileFiller;
 import processing.core.PApplet;
+import Colors.Color;
 
 import java.util.Random;
 
@@ -26,7 +27,12 @@ public class BotTileFiller implements TileFiller {
 //    tile.render();
   }
 
+  public int getBackgroundColor() {
+    return sketch.color(255, 0, 0);
+  }
+
   public int getFillColor() {
     return 0;
   }
+
 }
