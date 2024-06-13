@@ -38,24 +38,34 @@ public class TilesPixel {
     filled = true;
   }
 
+  // print border
+  public void renderPixelBorder() {
+    sketch.line(x, y, x + pixelSize, y);
+    sketch.line(x, y + pixelSize, x + pixelSize, y + pixelSize);
+    sketch.line(x + pixelSize, y, x + pixelSize, y + pixelSize);
+    sketch.line(x, y, x, y + pixelSize);
+    System.out.println("Printing tile pixel: x: " + x + ", y: " + y + ", pixelSize: " + pixelSize);
+  }
+
+  // print border between filled and unfilled
   public void printBorder() {
     if(!filled)
       return;
 
     sketch.stroke(0);
-    if(!tile.getPixel(i - 1, j).filled) {
+    if(i - 1 >= 0 && !tile.getPixel(i - 1, j).filled) {
       // print up border
       sketch.line(x, y, x + pixelSize, y);
     }
-    if(!tile.getPixel(i + 1, j).filled) {
+    if(i + 1 <= tile.pixelsPerSide - 1 && !tile.getPixel(i + 1, j).filled) {
       // print down border
       sketch.line(x, y + pixelSize, x + pixelSize, y + pixelSize);
     }
-    if(!tile.getPixel(i, j + 1).filled) {
+    if(j + 1 <= tile.pixelsPerSide - 1 && !tile.getPixel(i, j + 1).filled) {
       // print right border
       sketch.line(x + pixelSize, y, x + pixelSize, y + pixelSize);
     }
-    if(!tile.getPixel(i, j - 1).filled) {
+    if(j - 1 >= 0 && !tile.getPixel(i, j - 1).filled) {
       // print left border
       sketch.line(x, y, x, y + pixelSize);
     }

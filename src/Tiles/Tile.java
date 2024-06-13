@@ -9,7 +9,7 @@ import java.util.Random;
 public class Tile {
 
   public PApplet sketch;
-  public static int side = 64;
+  public static int side;
 
 
   // row and col are the tile's location
@@ -19,26 +19,28 @@ public class Tile {
   public float x;
   public float y;
   public float pixelSize;
-  public int pixelsPerSide = 8;
+  public int pixelsPerSide;
   public static Random rand = new Random();
   public static int tileBuffer = 1;
   private List<List<TilesPixel>> tilePixels;
   public int minPixelBounndary = tileBuffer;
-  public int maxPixelBounndary = pixelsPerSide - tileBuffer;
-  public int fillColor;
+  public int maxPixelBounndary;
   private TileFiller tileFiller;
 
   public boolean initialRender = true;
 
-  public Tile(PApplet sketch, int i, int j, int side, TileFiller tileFiller){
+  public Tile(PApplet sketch, int i, int j, int pixelSize, int pixelsPerSide, TileFiller tileFiller){
     this.sketch = sketch;
     this.row = i;
     this.col = j;
-    this.side = side;
+    this.pixelsPerSide = pixelsPerSide;
+    this.pixelSize = pixelSize;
+    this.side = pixelsPerSide * pixelSize;
     this.x = i * side;
     this.y = j * side;
-    this.pixelSize = side / pixelsPerSide;
+//    this.pixelSize = sideLength / pixelsPerSide;
     this.tileFiller = tileFiller;
+    this.maxPixelBounndary = pixelsPerSide - tileBuffer;
     setupPixels();
   }
 
@@ -48,8 +50,8 @@ public class Tile {
       List rowTilePixels = new ArrayList<>();
       tilePixels.add(rowTilePixels);
       for(int col=0; col < pixelsPerSide; col++) {
-        float xPos = x + col * pixelsPerSide;
-        float yPos = y + row * pixelsPerSide;
+        float xPos = x + col * pixelSize;
+        float yPos = y + row * pixelSize;
         rowTilePixels.add(new TilesPixel(this.sketch, this, row, col, xPos,  yPos, pixelSize, tileFiller.getFillColor()));
       }
     }

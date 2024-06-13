@@ -11,6 +11,8 @@ import java.util.List;
 public class TilesSketch extends PApplet{
 
   public static int numberOfTiles = 10;
+  public static int pixelSize = 8;
+  public static int pixelsPerSide = 8;
   public PFont f;
 
   private boolean initialDraw = true;
@@ -23,7 +25,7 @@ public class TilesSketch extends PApplet{
       for (int col = 0; col < numberOfTiles; col++) {
         ColorPallete colorPallete = new TestColorPallete();
         TileFiller tileFiller = new RandomTileFiller(this, colorPallete);
-        tiles.add(new Tile(this, row, col, Tile.side, tileFiller));
+        tiles.add(new Tile(this, row, col, pixelSize, pixelsPerSide, tileFiller));
       }
     }
   }
@@ -35,7 +37,7 @@ public class TilesSketch extends PApplet{
 
   // needed to define size and smooth values for sketches
   public void settings(){
-    int side = numberOfTiles * Tile.side;
+    int side = numberOfTiles * pixelSize * pixelsPerSide;
     size(side, side);
   }
 

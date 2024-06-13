@@ -12,7 +12,7 @@ public class TileBot extends Tile {
     private TileFiller tileFiller;
 
     public TileBot(PApplet sketch, int i, int j, int side, TileFiller tileFiller) {
-        super(sketch, i, j, side, tileFiller);
+        super(sketch, i, j, side, 8, tileFiller);
 
         TilesPixel tilesPixel = getRandomPixelInBoundary();
         this.tileFiller = tileFiller;
